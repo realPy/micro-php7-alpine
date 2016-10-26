@@ -19,3 +19,10 @@ RUN 	apk add --update curl tar xz libedit libxml2 && \
         cd / && rm php7.patch && rm -r php-src && \
 	rm /usr/lib/php/extensions/no-debug-non-zts-20160303/opcache.a && \
 	apk del build-deps
+
+RUN deluser xfs && adduser www-data -u 33 -g 33 -D
+EXPOSE 9000
+
+COPY php-fpm.conf /etc/php-fpm.conf
+CMD ["php-fpm","-F"]
+
